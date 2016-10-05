@@ -1,0 +1,26 @@
+<div class="jumbotron">
+    <h1 class="text-center">Alurapic</h1>
+</div>
+<p ng-show="mensagem.length" class="alert alert-info">{{ mensagem }}</p>
+<div class="row">
+    <div class="col-md-12">
+        <form>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <a href="fotos/insert" class="btn btn-info">Inserir</a>
+                </span>
+                <input ng-model="filtro" ng-model-options="{debounce: 500}" class="form-control" placeholder="Pesquisar" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12"><br /></div>
+</div>
+<div class="row">
+    <meu-painel class="col-md-2 painel-animado" ng-repeat="foto in fotos | filter: filtro" titulo="{{ foto.titulo }}">
+        <img class="img-responsive center-block" src="{{ foto.url }}" alt="{{ foto.titulo }}" />
+        <a href="fotos/update/{{ foto._id }}" class="btn btn-primary btn-block">Alterar</a>
+        <button class="btn btn-danger btn-block" ng-click="excluir(foto)">Excluir</button>
+    </meu-painel>
+</div>
