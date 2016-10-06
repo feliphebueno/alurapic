@@ -1,7 +1,7 @@
 /**
  * Created by root on 05/10/2016.
  */
-angular.module('alurapic').controller('CrudController', function ($scope, $http, $routeParams) {
+angular.module('alurapic').controller('CrudController', function ($scope, $routeParams, crudSource) {
 
     $scope.foto = {};
     $scope.mensagem = '';
@@ -9,35 +9,36 @@ angular.module('alurapic').controller('CrudController', function ($scope, $http,
     $scope.submeter = function () {
         if ($scope.formulario.$valid) {
             if ($scope.foto._id) {
-                $http.put('v1/fotos/'+ $scope.foto._id, $scope.foto)
-                    .success(function (data) {
-                        $scope.mensagem = 'Imagem atualizada com sucesso!';
-                    })
-                    .error(function (error) {
-                        $scope.mensagem = 'Falha ao atualizada sua solicitação!';
-                    })
+                crudSource.update({fotoId: $scope.foto._id}, $scope.foto, function (response) {
+                    $scope.mensagem = 'Imagem atualizada com sucesso!';
+                }, function (error) {
+                    $scope.mensagem = 'Falha ao atualizar sua solicitação!';
+                    console.error("API Error: "+ error)
+                });
+
             } else {
-                $http.post('v1/fotos', $scope.foto)
-                    .success(function (data) {
-                        $scope.foto = {};
-                        $scope.formulario = {};
-                        $scope.mensagem = 'Imagem cadastrada com sucesso!';
-                    })
-                    .error(function (error) {
-                        $scope.mensagem = 'Falha ao processar sua solicitação!';
-                    })
+
+                crudSource.save($scope.foto, function (response) {
+                    $scope.mensagem = 'Imagem cadastrada com sucesso!';
+                    console.log(response);
+                }, function (error) {
+                    $scope.mensagem = 'Falha ao processar sua solicitação!';
+                    console.error("API Error: "+ error)
+                });
             }
         }
    }
 
     //UPDATE
-    if($routeParams.fotoId) {
-        $http.get('http://localhost:3000/v1/fotos/'+ $routeParams.fotoId)
-            .success(function (data) {
-                $scope.foto = data;
-            }).error(function (error) {
-            $scope.mensagem = 'Falha ao processar sua solicitação!';
-            console.log(error);
+    if($routeParams.fotoId) {console.log($routeParams.fotoId);
+        crudSource.get({fotoId: $routeParams.fotoId}, function (xhr) {
+            $scope.foto = xhr;
+        }, function (error) {
+            $scope.mensagem = 'Falha ao processar sua solicitação!';console.error("API Error: "+ error);
         });
+
+/*
+
+ */
     }
 });

@@ -24,6 +24,14 @@
             <span ng-show="formulario.$submitted && formulario.descricao.$error.required" class="form-control alert-danger">Este campo é obrigatório</span>
         </div>
 
+        <div class="form-group">
+            <label>Grupo</label>
+            <select ng-model="foto.grupo" ng-controller="GruposController" ng-options="grupo._id as (grupo.nome|uppercase) for grupo in grupos" name="grupo" class="form-control" required>
+                <option value="">Selecione</option>
+            </select>
+            <span ng-show="formulario.$submitted && formulario.grupo.$error.required" class="form-control alert-danger">Este campo é obrigatório</span>
+        </div>
+
         <button type="submit" class="btn btn-primary" ng-disabled="formulario.$invalid">
             Salvar
         </button>

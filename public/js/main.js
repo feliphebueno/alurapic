@@ -1,7 +1,7 @@
 /**
  * Created by root on 05/10/2016.
  */
-angular.module('alurapic', ['minhasDiretivas', 'ngAnimate', 'ngRoute']).config(function($routeProvider, $locationProvider) {
+angular.module('alurapic', ['minhasDiretivas', 'ngAnimate', 'ngRoute', 'services']).config(function($routeProvider, $locationProvider) {
 
     $locationProvider.html5Mode(true);
 

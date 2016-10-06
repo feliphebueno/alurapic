@@ -1,27 +1,28 @@
 /**
  * Created by root on 05/10/2016.
  */
-angular.module('alurapic').controller('FotosController', function($scope, $http, $routeParams) {
+angular.module('alurapic').controller('FotosController', function($scope, crudSource) {
 
     $scope.fotos = [];
     $scope.filtro = '';
     $scope.mensagem = '';
 
     //GRID
-    $http.get('http://localhost:3000/v1/fotos/')
-    .success(function (data) {
+    crudSource.query(function (data) {
         $scope.fotos = data;
-    }).error(function (error) {
-        console.log(error);
+    }, function (error) {
+        console.error(error);
     });
 
     //DELETE
     $scope.excluir = function (foto) {
-        $http.delete('v1/fotos/'+ foto._id).success(function (data) {
+
+        crudSource.delete({fotoId: foto._id}, function (xhr) {
             $scope.fotos.splice($scope.fotos.indexOf(foto), 1);
             $scope.mensagem = "A foto "+ foto.titulo +" foi removida para todo o sempre";
-        }).error(function (error) {
+        }, function (error) {
             $scope.mensagem = 'Falha ao processar sua solicitação!';
         });
-    }
+    };
+
 });

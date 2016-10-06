@@ -21,6 +21,6 @@
     <meu-painel class="col-md-2 painel-animado" ng-repeat="foto in fotos | filter: filtro" titulo="{{ foto.titulo }}">
         <img class="img-responsive center-block" src="{{ foto.url }}" alt="{{ foto.titulo }}" />
         <a href="fotos/update/{{ foto._id }}" class="btn btn-primary btn-block">Alterar</a>
-        <button class="btn btn-danger btn-block" ng-click="excluir(foto)">Excluir</button>
+        <meu-botao-danger acao="excluir(foto)" nome="excluir"></meu-botao-danger>
     </meu-painel>
 </div>
