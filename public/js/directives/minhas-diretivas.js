@@ -40,4 +40,16 @@ angular.module('minhasDiretivas', []).directive('meuPainel', function () {
     ddo.template = '<button class="btn btn-danger btn-block" ng-click="acao(foto)">{{ nome }}</button>';
 
     return ddo;
+})
+.directive('focus', function () {
+    var ddo = {
+        restritc: 'A',
+        link: function (scope, element) {
+            scope.$on('insertDone', function () {
+                element[0].focus();
+            })
+        }
+    };
+
+    return ddo;
 });
