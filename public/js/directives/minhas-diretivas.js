@@ -52,4 +52,18 @@ angular.module('minhasDiretivas', []).directive('meuPainel', function () {
     };
 
     return ddo;
+})
+.directive('meusTitulos', function() {
+    var ddo = {
+        restrict: 'E',
+        template: '<div class="row"></div><div class="row"><ul><li ng-repeat="titulo in titulos">{{titulo}}</li></ul></div>',
+        controller: function($scope, crudSource) {
+            crudSource.query(function(data){
+                $scope.titulos = data.map(function(obj){
+                    return obj.titulo;
+                });
+            });
+        }
+    }
+    return ddo;
 });
